@@ -23,10 +23,11 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|jpg)/,
+        test: /\.(png|jpg|svg)/,
         type: 'asset/resource',
         generator: {
           filename: 'images/[name][ext]',
+          
         },
         use: [
           // {
@@ -38,6 +39,20 @@ module.exports = {
           // },
         ]
       },
+      {
+        test: /\.pug/,
+        use: [
+          {
+            loader: 'html-loader',
+          },
+          {
+            loader: 'pug-html-loader',
+            options: {
+              pretty: true,
+            }
+          },
+        ]
+      },
     ],
   },
   plugins: [
@@ -45,8 +60,12 @@ module.exports = {
       filename: './stylesheets/style.css',
     }),
     new HTMLWebpackPlugin({
-      template: './src/templates/index.html',
+      template: './src/templates/index.pug',
       filename: 'index.html',
+    }),
+    new HTMLWebpackPlugin({
+      template: './src/templates/access.pug',
+      filename: 'access.html',
     }),
     new CleanWebpackPlugin(),
   ],
